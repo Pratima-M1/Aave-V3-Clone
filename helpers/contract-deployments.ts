@@ -1,7 +1,7 @@
 import { EmissionManager } from "./../typechain";
 import { MockL2Pool } from "./../typechain";
 import { EMPTY_STORAGE_SLOT, ZERO_ADDRESS } from "./constants";
-import { StakedAave } from "./../typechain";
+import { StakedSmartLend } from "./../typechain";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { getPoolLibraries } from "./contract-getters";
 import { tEthereumAddress, tStringTokenSmallUnits } from "./types";
@@ -9,8 +9,8 @@ import { MintableERC20 } from "../typechain";
 import { deployContract } from "./utilities/tx";
 import { POOL_ADDRESSES_PROVIDER_ID } from "./deploy-ids";
 import {
-  AaveOracle,
-  AaveProtocolDataProvider,
+  SmartLendOracle,
+  SmartLendProtocolDataProvider,
   ACLManager,
   AToken,
   ConfiguratorLogic,
@@ -26,11 +26,11 @@ import {
 
 import { waitForTx } from "./utilities/tx";
 import {
-  STAKE_AAVE_IMPL_V1,
-  STAKE_AAVE_IMPL_V2,
-  STAKE_AAVE_IMPL_V3,
+  STAKE_SMARTLEND_IMPL_V1,
+  STAKE_SMARTLEND_IMPL_V2,
+  STAKE_SMARTLEND_IMPL_V3,
 } from "./deploy-ids";
-import { StakedAaveV2 } from "../typechain";
+import { StakedSmartLendV2 } from "../typechain";
 import { StakedTokenV2Rev3 } from "../typechain";
 import {
   MockAggregator,
@@ -134,7 +134,7 @@ export const deployPriceOracle = async () =>
 export const deployMockAggregator = async (price: tStringTokenSmallUnits) =>
   await deployContract<MockAggregator>("MockAggregator", [price]);
 
-export const deployAaveOracle = async (
+export const deploySmartLendOracle = async (
   args: [
     tEthereumAddress,
     tEthereumAddress[],
@@ -143,7 +143,7 @@ export const deployAaveOracle = async (
     tEthereumAddress,
     string
   ]
-) => deployContract<AaveOracle>("AaveOracle", args);
+) => deployContract<SmartLendOracle>("SmartLendOracle", args);
 
 export const deployMockFlashLoanReceiver = async (
   addressesProvider: tEthereumAddress
@@ -152,12 +152,13 @@ export const deployMockFlashLoanReceiver = async (
     addressesProvider,
   ]);
 
-export const deployAaveProtocolDataProvider = async (
+export const deploySmartLendProtocolDataProvider = async (
   addressesProvider: tEthereumAddress
 ) =>
-  deployContract<AaveProtocolDataProvider>("AaveProtocolDataProvider", [
-    addressesProvider,
-  ]);
+  deployContract<SmartLendProtocolDataProvider>(
+    "SmartLendProtocolDataProvider",
+    [addressesProvider]
+  );
 
 export const deployMintableERC20 = async (args: [string, string, string]) =>
   deployContract<MintableERC20>("MintableERC20", args);
@@ -397,7 +398,7 @@ export const deployWrappedTokenGateway = async (
     wrappedToken,
   ]);
 
-export const deployStakedAaveV3 = async ([
+export const deployStakedSmartLendV3 = async ([
   stakedToken,
   rewardsToken,
   cooldownSeconds,
@@ -422,8 +423,8 @@ export const deployStakedAaveV3 = async ([
     rewardsVault,
     emissionManager,
     distributionDuration,
-    "Staked AAVE",
-    "stkAAVE",
+    "Staked SMARTLEND",
+    "stkSMARTLEND",
     "18",
     ZERO_ADDRESS, // gov
   ];
@@ -431,11 +432,11 @@ export const deployStakedAaveV3 = async ([
     "StakedTokenV2Rev3",
     args,
     undefined,
-    STAKE_AAVE_IMPL_V3
+    STAKE_SMARTLEND_IMPL_V3
   );
 };
 
-export const deployStakedAaveV2 = async ([
+export const deployStakedSmartLendV2 = async ([
   stakedToken,
   rewardsToken,
   cooldownSeconds,
@@ -451,7 +452,7 @@ export const deployStakedAaveV2 = async ([
   tEthereumAddress,
   tEthereumAddress,
   string
-]): Promise<StakedAaveV2> => {
+]): Promise<StakedSmartLendV2> => {
   const { deployer } = await hre.getNamedAccounts();
   const args: string[] = [
     stakedToken,
@@ -464,15 +465,15 @@ export const deployStakedAaveV2 = async ([
     ZERO_ADDRESS, // gov address
   ];
 
-  return deployContract<StakedAaveV2>(
-    "StakedAaveV2",
+  return deployContract<StakedSmartLendV2>(
+    "StakedSmartLendV2",
     args,
     undefined,
-    STAKE_AAVE_IMPL_V2
+    STAKE_SMARTLEND_IMPL_V2
   );
 };
 
-export const deployStakedAaveV1 = async ([
+export const deployStakedSmartLendV1 = async ([
   stakedToken,
   rewardsToken,
   cooldownSeconds,
@@ -488,7 +489,7 @@ export const deployStakedAaveV1 = async ([
   tEthereumAddress,
   tEthereumAddress,
   string
-]): Promise<StakedAave> => {
+]): Promise<StakedSmartLend> => {
   const { deployer } = await hre.getNamedAccounts();
   const args: string[] = [
     stakedToken,
@@ -500,15 +501,15 @@ export const deployStakedAaveV1 = async ([
     distributionDuration,
   ];
 
-  return deployContract<StakedAave>(
-    "StakedAave",
+  return deployContract<StakedSmartLend>(
+    "StakedSmartLend",
     args,
     undefined,
-    STAKE_AAVE_IMPL_V1
+    STAKE_SMARTLEND_IMPL_V1
   );
 };
 
-export const setupStkAave = async (
+export const setupStkSmartLend = async (
   proxy: InitializableAdminUpgradeabilityProxy,
   args: [
     tEthereumAddress,
@@ -522,25 +523,25 @@ export const setupStkAave = async (
 ) => {
   const { incentivesProxyAdmin } = await hre.getNamedAccounts();
   const proxyAdmin = await hre.ethers.getSigner(incentivesProxyAdmin);
-  const implRev1 = await deployStakedAaveV1(args);
-  const implRev2 = await deployStakedAaveV2(args);
-  const implRev3 = await deployStakedAaveV3(args);
+  const implRev1 = await deployStakedSmartLendV1(args);
+  const implRev2 = await deployStakedSmartLendV2(args);
+  const implRev3 = await deployStakedSmartLendV3(args);
 
   const proxyAdminSlot = await hre.ethers.provider.getStorageAt(
     proxy.address,
     "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103" // keccak-256 eip1967.proxy.admin sub 1
   );
 
-  const initialPayloadStkAaveRev1 = implRev1
+  const initialPayloadStkSmartLendRev1 = implRev1
     .connect(proxyAdmin)
     .interface.encodeFunctionData("initialize", [
       ZERO_ADDRESS, // gov
-      "Staked AAVE",
-      "stkAAVE",
+      "Staked SMARTLEND",
+      "stkSMARTLEND",
       18,
     ]);
 
-  const upgradePayloadStkAaveRev2andRev3 = implRev2
+  const upgradePayloadStkSmartLendRev2andRev3 = implRev2
     .connect(proxyAdmin)
     .interface.encodeFunctionData("initialize");
 
@@ -554,10 +555,10 @@ export const setupStkAave = async (
       await stkProxy["initialize(address,address,bytes)"](
         implRev1.address,
         proxyAdmin.address,
-        initialPayloadStkAaveRev1
+        initialPayloadStkSmartLendRev1
       )
     );
-    console.log("- Initializing admin proxy for stkAAVE");
+    console.log("- Initializing admin proxy for stkSMARTLEND");
   }
 
   const revisionV1 = Number((await proxyWithImpl.REVISION()).toString());
@@ -566,10 +567,10 @@ export const setupStkAave = async (
     await waitForTx(
       await stkProxy.upgradeToAndCall(
         implRev2.address,
-        upgradePayloadStkAaveRev2andRev3
+        upgradePayloadStkSmartLendRev2andRev3
       )
     );
-    console.log("- Upgraded stkAAVE to Revision 2");
+    console.log("- Upgraded stkSMARTLEND to Revision 2");
   }
 
   const revisionV2 = Number((await proxyWithImpl.REVISION()).toString());
@@ -579,15 +580,15 @@ export const setupStkAave = async (
     await waitForTx(
       await stkProxy.upgradeToAndCall(
         implRev3.address,
-        upgradePayloadStkAaveRev2andRev3
+        upgradePayloadStkSmartLendRev2andRev3
       )
     );
-    console.log("- Upgraded stkAAVE to Revision 3");
+    console.log("- Upgraded stkSMARTLEND to Revision 3");
   }
 
   const revisionV3 = Number((await proxyWithImpl.REVISION()).toString());
 
-  console.log("stkAAVE:");
+  console.log("stkSMARTLEND:");
   console.log("- revision:", revisionV3);
   console.log("- name:", await proxyWithImpl.name());
   console.log("- symbol:", await proxyWithImpl.symbol());

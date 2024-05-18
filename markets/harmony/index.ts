@@ -1,8 +1,8 @@
 import { rateStrategyDebtPrevention } from "./rateStrategies";
-import { eHarmonyNetwork, IAaveConfiguration } from "../../helpers/types";
-import { AaveMarket } from "../aave/index";
+import { eHarmonyNetwork, ISmartLendConfiguration } from "../../helpers/types";
+import { SmartLendMarket } from "../smartlend/index";
 import {
-  strategyAAVE,
+  strategySMARTLEND,
   strategyDAI,
   strategyLINK,
   strategyUSDC,
@@ -16,11 +16,11 @@ import { ZERO_ADDRESS } from "../../helpers/constants";
 // POOL--SPECIFIC PARAMS
 // ----------------
 
-export const HarmonyMarket: IAaveConfiguration = {
-  ...AaveMarket,
+export const HarmonyMarket: ISmartLendConfiguration = {
+  ...SmartLendMarket,
   ProviderId: 31,
   WrappedNativeTokenSymbol: "WONE",
-  MarketId: "Harmony Aave Market",
+  MarketId: "Harmony SmartLend Market",
   ATokenNamePrefix: "Harmony",
   StableDebtTokenNamePrefix: "Harmony",
   VariableDebtTokenNamePrefix: "Harmony",
@@ -32,7 +32,7 @@ export const HarmonyMarket: IAaveConfiguration = {
     WBTC: strategyWBTC,
     WETH: strategyWETH,
     USDT: strategyUSDT,
-    AAVE: strategyAAVE,
+    SMARTLEND: strategySMARTLEND,
     WONE: strategyWONE,
   },
   ReserveAssets: {
@@ -43,11 +43,11 @@ export const HarmonyMarket: IAaveConfiguration = {
       WBTC: "0x3095c7557bCb296ccc6e363DE01b760bA031F2d9",
       WETH: "0x6983d1e6def3690c4d616b13597a09e6193ea013",
       USDT: "0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
-      AAVE: "0xcF323Aad9E522B93F11c352CaA519Ad0E14eB40F",
+      SMARTLEND: "0xcF323Aad9E522B93F11c352CaA519Ad0E14eB40F",
       WONE: "0xcF664087a5bB0237a0BAd6742852ec6c8d69A27a",
     },
     [eHarmonyNetwork.testnet]: {
-      AAVE: ZERO_ADDRESS,
+      SMARTLEND: ZERO_ADDRESS,
       DAI: ZERO_ADDRESS,
       LINK: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
@@ -66,7 +66,7 @@ export const HarmonyMarket: IAaveConfiguration = {
       WETH: "0xbaf7C8149D586055ed02c286367A41E0aDA96b7C",
       USDT: "0x5CaAeBE5C69a8287bffB9d00b5231bf7254145bf",
       WONE: "0xdCD81FbbD6c4572A69a534D8b8152c562dA8AbEF",
-      AAVE: "0x6EE1EfCCe688D5B79CB8a400870AF471c5282992",
+      SMARTLEND: "0x6EE1EfCCe688D5B79CB8a400870AF471c5282992",
     },
   },
   EModes: {

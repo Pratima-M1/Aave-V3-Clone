@@ -42,19 +42,22 @@ const func: DeployFunction = async function ({
   );
   const poolAdmin = GOVERNANCE_BRIDGE_EXECUTOR[network] || POOL_ADMIN[network];
 
-  await deploy("ParaSwapLiquiditySwapAdapter", {
+  const paraSwapLiquiditySwapAdapterArtifact = await deploy(
+    "ParaSwapLiquiditySwapAdapter",
+    {
+      from: deployer,
+      ...COMMON_DEPLOY_PARAMS,
+      args: [addressesProvider, paraswapAugustusRegistry, poolAdmin],
+    }
+  );
+
+  const paraswapRepayArtifact = await deploy("ParaSwapRepayAdapter", {
     from: deployer,
     ...COMMON_DEPLOY_PARAMS,
     args: [addressesProvider, paraswapAugustusRegistry, poolAdmin],
   });
 
-  await deploy("ParaSwapRepayAdapter", {
-    from: deployer,
-    ...COMMON_DEPLOY_PARAMS,
-    args: [addressesProvider, paraswapAugustusRegistry, poolAdmin],
-  });
-
-  await deploy("ParaSwapWithdrawSwapAdapter", {
+  const paraswapWithdrawArtifact = await deploy("ParaSwapWithdrawSwapAdapter", {
     from: deployer,
     ...COMMON_DEPLOY_PARAMS,
     args: [addressesProvider, paraswapAugustusRegistry, poolAdmin],
@@ -64,7 +67,7 @@ const func: DeployFunction = async function ({
 };
 
 // This script can only be run successfully once per market, core version, and network
-func.id = `ParaswapAdapters:${MARKET_NAME}:aave-v3-periphery@${V3_PERIPHERY_VERSION}`;
+func.id = `ParaswapAdapters:${MARKET_NAME}:smartlend-v3-periphery@${V3_PERIPHERY_VERSION}`;
 
 func.tags = ["periphery-post", "paraswap-adapters"];
 

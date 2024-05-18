@@ -9,7 +9,7 @@ import {
   loadPoolConfig,
   savePoolTokens,
 } from "../../helpers/market-config-helpers";
-import { eNetwork, IAaveConfiguration } from "../../helpers/types";
+import { eNetwork, ISmartLendConfiguration } from "../../helpers/types";
 import {
   configureReservesByHelper,
   initReservesByHelper,
@@ -32,7 +32,7 @@ const func: DeployFunction = async function ({
 
   const poolConfig = (await loadPoolConfig(
     MARKET_NAME as ConfigNames
-  )) as IAaveConfiguration;
+  )) as ISmartLendConfiguration;
 
   const addressProviderArtifact = await deployments.get(
     POOL_ADDRESSES_PROVIDER_ID
@@ -62,12 +62,15 @@ const func: DeployFunction = async function ({
       strategyData.stableRateExcessOffset,
       strategyData.optimalStableToTotalDebtRatio,
     ];
-    await deployments.deploy(`ReserveStrategy-${strategyData.name}`, {
-      from: deployer,
-      args: args,
-      contract: "DefaultReserveInterestRateStrategy",
-      log: true,
-    });
+    const reserveStratergyArtifact = await deployments.deploy(
+      `ReserveStrategy-${strategyData.name}`,
+      {
+        from: deployer,
+        args: args,
+        contract: "DefaultReserveInterestRateStrategy",
+        log: true,
+      }
+    );
   }
 
   // Deploy Reserves ATokens
@@ -105,7 +108,7 @@ const func: DeployFunction = async function ({
 };
 
 // This script can only be run successfully once per market, core version, and network
-func.id = `ReservesInit:${MARKET_NAME}:aave-v3-core@${V3_CORE_VERSION}`;
+func.id = `ReservesInit:${MARKET_NAME}:smartlend-core@${V3_CORE_VERSION}`;
 
 func.tags = ["market", "init-reserves"];
 func.dependencies = [

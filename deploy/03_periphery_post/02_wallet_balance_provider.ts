@@ -10,7 +10,7 @@ const func: DeployFunction = async function ({
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  await deploy("WalletBalanceProvider", {
+  const walletArtifact = await deploy("WalletBalanceProvider", {
     from: deployer,
     ...COMMON_DEPLOY_PARAMS,
   });

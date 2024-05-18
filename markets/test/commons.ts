@@ -17,7 +17,7 @@ import {
 // ----------------
 
 export const CommonsConfig: ICommonConfiguration = {
-  MarketId: "Testnet Aave Market",
+  MarketId: "Testnet SmartLend Market",
   ATokenNamePrefix: "Testnet",
   StableDebtTokenNamePrefix: "Testnet",
   VariableDebtTokenNamePrefix: "Testnet",
@@ -29,7 +29,7 @@ export const CommonsConfig: ICommonConfiguration = {
   WrappedNativeTokenSymbol: "WETH",
   ChainlinkAggregator: {
     [eEthereumNetwork.main]: {
-      AAVE: "0x547a514d5e3769680Ce22B2361c10Ea13619e8a9",
+      SMARTLEND: "0x547a514d5e3769680Ce22B2361c10Ea13619e8a9",
       DAI: "0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9",
       LINK: "0x2c1d072e956AFFC0D435Cb7AC38EF18d24d9127c",
       USDC: "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
@@ -82,25 +82,25 @@ export const CommonsConfig: ICommonConfiguration = {
         CRV: ZERO_ADDRESS,
         REW: ZERO_ADDRESS,
         BAL: ZERO_ADDRESS,
-        StkAave: ZERO_ADDRESS,
+        StkSmartLend: ZERO_ADDRESS,
       },
       [eEthereumNetwork.kovan]: {
         CRV: ZERO_ADDRESS,
         REW: ZERO_ADDRESS,
         BAL: ZERO_ADDRESS,
-        StkAave: ZERO_ADDRESS,
+        StkSmartLend: ZERO_ADDRESS,
       },
       [eEthereumNetwork.rinkeby]: {
         CRV: ZERO_ADDRESS,
         REW: ZERO_ADDRESS,
         BAL: ZERO_ADDRESS,
-        StkAave: ZERO_ADDRESS,
+        StkSmartLend: ZERO_ADDRESS,
       },
       [eEthereumNetwork.hardhat]: {
         CRV: ZERO_ADDRESS,
         REW: ZERO_ADDRESS,
         BAL: ZERO_ADDRESS,
-        StkAave: ZERO_ADDRESS,
+        StkSmartLend: ZERO_ADDRESS,
       },
     },
     rewardsOracle: {
@@ -108,25 +108,25 @@ export const CommonsConfig: ICommonConfiguration = {
         CRV: ZERO_ADDRESS,
         REW: ZERO_ADDRESS,
         BAL: ZERO_ADDRESS,
-        StkAave: ZERO_ADDRESS,
+        StkSmartLend: ZERO_ADDRESS,
       },
       [eEthereumNetwork.kovan]: {
         CRV: ZERO_ADDRESS,
         REW: ZERO_ADDRESS,
         BAL: ZERO_ADDRESS,
-        StkAave: ZERO_ADDRESS,
+        StkSmartLend: ZERO_ADDRESS,
       },
       [eEthereumNetwork.rinkeby]: {
         CRV: ZERO_ADDRESS,
         REW: ZERO_ADDRESS,
         BAL: ZERO_ADDRESS,
-        StkAave: ZERO_ADDRESS,
+        StkSmartLend: ZERO_ADDRESS,
       },
       [eEthereumNetwork.hardhat]: {
         CRV: ZERO_ADDRESS,
         REW: ZERO_ADDRESS,
         BAL: ZERO_ADDRESS,
-        StkAave: ZERO_ADDRESS,
+        StkSmartLend: ZERO_ADDRESS,
       },
     },
     incentivesInput: {

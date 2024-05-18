@@ -1,6 +1,6 @@
 import {
   eContractid,
-  IAaveConfiguration,
+  ISmartLendConfiguration,
   iMultiPoolsAssets,
   IReserveParams,
   tEthereumAddress,
@@ -23,7 +23,7 @@ import {
 import { chunk, isValidAddress } from "./utilities/utils";
 import { waitForTx } from "./utilities/tx";
 import {
-  AaveProtocolDataProvider,
+  SmartLendProtocolDataProvider,
   ACLManager,
   Pool,
   PoolAddressesProvider,
@@ -54,7 +54,7 @@ export const initReservesByHelper = async (
 ) => {
   const poolConfig = (await loadPoolConfig(
     MARKET_NAME as ConfigNames
-  )) as IAaveConfiguration;
+  )) as ISmartLendConfiguration;
   const addressProviderArtifact = await hre.deployments.get(
     POOL_ADDRESSES_PROVIDER_ID
   );
@@ -189,11 +189,11 @@ export const initReservesByHelper = async (
       treasury: treasuryAddress,
       incentivesController,
       underlyingAssetName: reserveSymbols[i],
-      aTokenName: `Aave ${aTokenNamePrefix} ${reserveSymbols[i]}`,
+      aTokenName: `SmartLend ${aTokenNamePrefix} ${reserveSymbols[i]}`,
       aTokenSymbol: `a${symbolPrefix}${reserveSymbols[i]}`,
-      variableDebtTokenName: `Aave ${variableDebtTokenNamePrefix} Variable Debt ${reserveSymbols[i]}`,
+      variableDebtTokenName: `SmartLend ${variableDebtTokenNamePrefix} Variable Debt ${reserveSymbols[i]}`,
       variableDebtTokenSymbol: `variableDebt${symbolPrefix}${reserveSymbols[i]}`,
-      stableDebtTokenName: `Aave ${stableDebtTokenNamePrefix} Stable Debt ${reserveSymbols[i]}`,
+      stableDebtTokenName: `SmartLend ${stableDebtTokenNamePrefix} Stable Debt ${reserveSymbols[i]}`,
       stableDebtTokenSymbol: `stableDebt${symbolPrefix}${reserveSymbols[i]}`,
       params: "0x10",
     });
@@ -296,7 +296,7 @@ export const configureReservesByHelper = async (
     (
       await hre.deployments.get(POOL_DATA_PROVIDER)
     ).address
-  )) as AaveProtocolDataProvider;
+  )) as SmartLendProtocolDataProvider;
 
   const tokens: string[] = [];
   const symbols: string[] = [];

@@ -10,7 +10,7 @@ import {
   TREASURY_PROXY_ID,
 } from "./../../helpers/deploy-ids";
 import { getAddressFromJson } from "./../../helpers/utilities/tx";
-import { getAaveProtocolDataProvider } from "../../helpers/contract-getters";
+import { getSmartLendProtocolDataProvider } from "../../helpers/contract-getters";
 import { waitForTx } from "../../helpers/utilities/tx";
 import { getPoolConfiguratorProxy } from "../../helpers/contract-getters";
 import { task } from "hardhat/config";
@@ -44,7 +44,7 @@ task(`upgrade-atokens`)
         network,
         INCENTIVES_PROXY_ID
       );
-      const protocolDataProvider = await getAaveProtocolDataProvider(
+      const protocolDataProvider = await getSmartLendProtocolDataProvider(
         await poolAddressesProvider.getPoolDataProvider()
       );
 

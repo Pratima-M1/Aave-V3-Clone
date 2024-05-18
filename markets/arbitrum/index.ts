@@ -1,5 +1,8 @@
-import { eArbitrumNetwork, IAaveConfiguration } from "./../../helpers/types";
-import AaveMarket from "../aave";
+import {
+  eArbitrumNetwork,
+  ISmartLendConfiguration,
+} from "./../../helpers/types";
+import SmartLendMarket from "../smartlend";
 import { ZERO_ADDRESS } from "../../helpers";
 import {
   strategyDAI,
@@ -8,13 +11,13 @@ import {
   strategyWBTC,
   strategyWETH,
   strategyUSDT,
-  strategyAAVE,
+  strategySMARTLEND,
   strategyEURS,
-} from "../aave/reservesConfigs";
+} from "../smartlend/reservesConfigs";
 
-export const ArbitrumConfig: IAaveConfiguration = {
-  ...AaveMarket,
-  MarketId: "Arbitrum Aave Market",
+export const ArbitrumConfig: ISmartLendConfiguration = {
+  ...SmartLendMarket,
+  MarketId: "Arbitrum SmartLend Market",
   ATokenNamePrefix: "Arbitrum",
   StableDebtTokenNamePrefix: "Arbitrum",
   VariableDebtTokenNamePrefix: "Arbitrum",
@@ -27,7 +30,7 @@ export const ArbitrumConfig: IAaveConfiguration = {
     WBTC: strategyWBTC,
     WETH: strategyWETH,
     USDT: strategyUSDT,
-    AAVE: strategyAAVE,
+    sMARTLEND: strategySMARTLEND,
     EURS: strategyEURS,
   },
   ReserveAssets: {
@@ -38,7 +41,7 @@ export const ArbitrumConfig: IAaveConfiguration = {
       WBTC: "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
       WETH: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
       USDT: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-      AAVE: "0xba5DdD1f9d7F570dc94a51479a000E3BCE967196",
+      sMARTLEND: "0xba5DdD1f9d7F570dc94a51479a000E3BCE967196",
       EURS: "0xD22a58f79e9481D1a88e00c343885A588b34b68B",
     },
     [eArbitrumNetwork.arbitrumTestnet]: {
@@ -48,7 +51,7 @@ export const ArbitrumConfig: IAaveConfiguration = {
       WBTC: ZERO_ADDRESS,
       WETH: ZERO_ADDRESS,
       USDT: ZERO_ADDRESS,
-      AAVE: ZERO_ADDRESS,
+      sMARTLEND: ZERO_ADDRESS,
       EURS: ZERO_ADDRESS,
     },
     [eArbitrumNetwork.goerliNitro]: {
@@ -58,7 +61,7 @@ export const ArbitrumConfig: IAaveConfiguration = {
       WBTC: ZERO_ADDRESS,
       WETH: ZERO_ADDRESS,
       USDT: ZERO_ADDRESS,
-      AAVE: ZERO_ADDRESS,
+      sMARTLEND: ZERO_ADDRESS,
       EURS: ZERO_ADDRESS,
     },
   },
@@ -80,7 +83,7 @@ export const ArbitrumConfig: IAaveConfiguration = {
       WBTC: "0x6ce185860a4963106506C203335A2910413708e9",
       WETH: "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612",
       USDT: "0x3f3f5dF88dC9F13eac63DF89EC16ef6e7E25DdE7",
-      AAVE: "0xaD1d5344AaDE45F43E596773Bcc4c423EAbdD034",
+      sMARTLEND: "0xaD1d5344AaDE45F43E596773Bcc4c423EAbdD034",
       // Note: Using EUR/USD Chainlink data feed
       EURS: "0xA14d53bC1F1c0F31B4aA3BD109344E5009051a84",
     },

@@ -86,7 +86,7 @@ export enum EthereumNetworkNames {
   fuji = "fuji",
 }
 
-export enum AavePools {
+export enum SmartLendPools {
   proto = "proto",
   matic = "matic",
   amm = "amm",
@@ -107,7 +107,7 @@ export enum eContractid {
   PriceOracle = "PriceOracle",
   Proxy = "Proxy",
   MockAggregator = "MockAggregator",
-  AaveOracle = "AaveOracle",
+  SmartLendOracle = "SmartLendOracle",
   DefaultReserveInterestRateStrategy = "DefaultReserveInterestRateStrategy",
   LendingPoolCollateralManager = "LendingPoolCollateralManager",
   InitializableAdminUpgradeabilityProxy = "InitializableAdminUpgradeabilityProxy",
@@ -118,7 +118,7 @@ export enum eContractid {
   DelegationAwareAToken = "DelegationAwareAToken",
   MockStableDebtToken = "MockStableDebtToken",
   MockVariableDebtToken = "MockVariableDebtToken",
-  AaveProtocolDataProvider = "AaveProtocolDataProvider",
+  SmartLendProtocolDataProvider = "SmartLendProtocolDataProvider",
   IERC20Detailed = "IERC20Detailed",
   StableDebtToken = "StableDebtToken",
   VariableDebtToken = "VariableDebtToken",
@@ -247,7 +247,7 @@ export interface iAssetBase<T> {
   USDC: T;
   USDT: T;
   SUSD: T;
-  AAVE: T;
+  SMARTLEND: T;
   BAT: T;
   MKR: T;
   LINK: T;
@@ -264,7 +264,7 @@ export interface iAssetBase<T> {
   ENJ: T;
   UniDAIWETH: T;
   UniWBTCWETH: T;
-  UniAAVEWETH: T;
+  UniSMARTLENDWETH: T;
   UniBATWETH: T;
   UniDAIUSDC: T;
   UniCRVWETH: T;
@@ -288,9 +288,9 @@ export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, "ETH">;
 
 export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, "USD">;
 
-export type iAavePoolAssets<T> = Pick<
+export type iSmartLendPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  "DAI" | "USDC" | "AAVE" | "LINK" | "WBTC" | "WETH"
+  "DAI" | "USDC" | "SMARTLEND" | "LINK" | "WBTC" | "WETH"
 >;
 
 export type iLpPoolAssets<T> = Pick<
@@ -302,7 +302,7 @@ export type iLpPoolAssets<T> = Pick<
   | "WETH"
   | "UniDAIWETH"
   | "UniWBTCWETH"
-  | "UniAAVEWETH"
+  | "UniSMARTLENDWETH"
   | "UniBATWETH"
   | "UniDAIUSDC"
   | "UniCRVWETH"
@@ -320,7 +320,7 @@ export type iLpPoolAssets<T> = Pick<
 
 export type iMaticPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  "DAI" | "USDC" | "USDT" | "WBTC" | "WETH" | "WMATIC" | "AAVE"
+  "DAI" | "USDC" | "USDT" | "WBTC" | "WETH" | "WMATIC" | "SMARTLEND"
 >;
 
 export type iXDAIPoolAssets<T> = Pick<
@@ -330,18 +330,18 @@ export type iXDAIPoolAssets<T> = Pick<
 
 export type iAvalanchePoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  "WETH" | "DAI" | "USDC" | "USDT" | "AAVE" | "WBTC" | "AVAX"
+  "WETH" | "DAI" | "USDC" | "USDT" | "SMARTLEND" | "WBTC" | "AVAX"
 >;
 
-export type iMultiPoolsAssets<T> = iAssetCommon<T> | iAavePoolAssets<T>;
+export type iMultiPoolsAssets<T> = iAssetCommon<T> | iSmartLendPoolAssets<T>;
 
-export type iAavePoolTokens<T> = Omit<iAavePoolAssets<T>, "ETH">;
+export type iSmartLendPoolTokens<T> = Omit<iSmartLendPoolAssets<T>, "ETH">;
 
 export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
 export enum TokenContractId {
   DAI = "DAI",
-  AAVE = "AAVE",
+  SMARTLEND = "SMARTLEND",
   TUSD = "TUSD",
   BAT = "BAT",
   WETH = "WETH",
@@ -363,7 +363,7 @@ export enum TokenContractId {
   ENJ = "ENJ",
   UniDAIWETH = "UniDAIWETH",
   UniWBTCWETH = "UniWBTCWETH",
-  UniAAVEWETH = "UniAAVEWETH",
+  UniSMARTLENDWETH = "UniSMARTLENDWETH",
   UniBATWETH = "UniBATWETH",
   UniDAIUSDC = "UniDAIUSDC",
   UniCRVWETH = "UniCRVWETH",
@@ -468,10 +468,10 @@ export interface iArbitrumParamsPerNetwork<T> {
 }
 
 export interface iParamsPerPool<T> {
-  [AavePools.proto]: T;
-  [AavePools.matic]: T;
-  [AavePools.amm]: T;
-  [AavePools.avalanche]: T;
+  [SmartLendPools.proto]: T;
+  [SmartLendPools.matic]: T;
+  [SmartLendPools.amm]: T;
+  [SmartLendPools.avalanche]: T;
 }
 
 export interface iBasicDistributionParams {
@@ -531,7 +531,7 @@ export interface IBaseConfiguration {
   IncentivesConfig: IncentivesConfig;
   EModes: SymbolMap<EMode>;
   L2PoolEnabled?: iParamsPerNetwork<boolean>;
-  StkAaveProxy?: iParamsPerNetwork<tEthereumAddress>;
+  StkSmartLendProxy?: iParamsPerNetwork<tEthereumAddress>;
   ParaswapRegistry?: iParamsPerNetwork<tEthereumAddress>;
   FlashLoanPremiums: {
     total: number;
@@ -542,8 +542,8 @@ export interface IBaseConfiguration {
 
 export interface ICommonConfiguration extends IBaseConfiguration {}
 
-export interface IAaveConfiguration extends ICommonConfiguration {
-  //ReservesConfig: iAavePoolAssets<IReserveParams>;
+export interface ISmartLendConfiguration extends ICommonConfiguration {
+  //ReservesConfig: iSmartLendPoolAssets<IReserveParams>;
 }
 
 export interface ITokenAddress {

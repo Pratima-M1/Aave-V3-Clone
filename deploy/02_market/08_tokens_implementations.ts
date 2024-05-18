@@ -138,7 +138,7 @@ const func: DeployFunction = async function ({
   return true;
 };
 
-func.id = `TokenImplementations:${MARKET_NAME}:aave-v3-core@${V3_CORE_VERSION}`;
+func.id = `TokenImplementations:${MARKET_NAME}:smartlend-v3-core@${V3_CORE_VERSION}`;
 
 func.tags = ["market", "tokens"];
 

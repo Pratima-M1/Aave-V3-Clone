@@ -1,5 +1,5 @@
 {
-  "name": "@aave/deploy-v3",
+  "name": "deploy-smartlend",
   "version": "1.56.0-beta.5",
   "files": [
     "dist",
@@ -10,19 +10,8 @@
     "node": ">=16.0.0"
   },
   "types": "dist/types/helpers/index.d.ts",
-  "author": "Aave",
-  "contributors": [
-    "David Racero <david.k@aave.com>",
-    "Miguel Martinez <miguel@aave.com>",
-    "Steven Valeri <steven@aave.com>",
-    "Emilio Frangella <emilio@aave.com>"
-  ],
   "main": "dist/helpers/index.js",
   "devDependencies": {
-    "@aave/aave-token": "^1.0.4",
-    "@aave/core-v3": "^1.19.2-beta.1",
-    "@aave/periphery-v3": "^2.5.0-beta.7",
-    "@aave/safety-module": "^1.0.3",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.5",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
@@ -62,21 +51,15 @@
     "node:fork": "FORK=main npm run node --no-deploy",
     "deploy": "if [ \"$SKIP_COMPILE\" = 'true' ]; then echo '[Warning] Skipping compilation'; else npm run compile; fi && npx hardhat deploy --no-compile",
     "test": "npm run compile && npm run test:fork",
-    "test:fork": "MARKET_NAME=Aave FORK=main npx hardhat test ./tests/__setup.spec.ts ./tests/fork/check-list.spec.ts",
-    "deploy:market:aave:fork": "FORK=main MARKET_NAME=Aave npm run deploy",
+    "test:fork": "MARKET_NAME=SmartLend FORK=main npx hardhat test ./tests/__setup.spec.ts ./tests/fork/check-list.spec.ts",
+    "deploy:market:smartlend:fork": "FORK=main MARKET_NAME=SmartLend npm run deploy",
     "deploy:market:eth:empty:fork": "FORK=main MARKET_NAME=Ethereum npm run deploy"
   },
   "peerDependencies": {
-    "@aave/core-v3": "x || >=1.0.0-beta || >=3.0.0-beta",
-    "@aave/periphery-v3": "x || >=1.0.0-beta || >=3.0.0-beta",
     "hardhat": "^2.6.1"
   },
   "publishConfig": {
     "registry": " https://registry.npmjs.org"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/aave/aave-v3-deploy"
   },
   "dependencies": {
     "@openzeppelin/defender-relay-client": "^1.54.1"

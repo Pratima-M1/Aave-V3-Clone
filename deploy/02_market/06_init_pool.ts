@@ -101,7 +101,7 @@ const func: DeployFunction = async function ({
 
   if (isL2PoolSupported(poolConfig)) {
     // Deploy L2 Encoder
-    await deploy(L2_ENCODER, {
+    const l2Artifact = await deploy(L2_ENCODER, {
       from: deployer,
       contract: "L2Encoder",
       args: [poolProxyAddress],
@@ -131,7 +131,7 @@ const func: DeployFunction = async function ({
 };
 
 // This script can only be run successfully once per market, core version, and network
-func.id = `PoolInitalization:${MARKET_NAME}:aave-v3-core@${V3_CORE_VERSION}`;
+func.id = `PoolInitalization:${MARKET_NAME}:smartlend-v3-core@${V3_CORE_VERSION}`;
 
 func.tags = ["market", "init-pool"];
 func.dependencies = ["before-deploy", "core", "periphery-pre", "provider"];

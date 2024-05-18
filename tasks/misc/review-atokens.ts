@@ -4,7 +4,7 @@ import {
 } from "../../helpers/contract-getters";
 import { POOL_ADDRESSES_PROVIDER_ID } from "../../helpers/deploy-ids";
 import { getAddressFromJson } from "../../helpers/utilities/tx";
-import { getAaveProtocolDataProvider } from "../../helpers/contract-getters";
+import { getSmartLendProtocolDataProvider } from "../../helpers/contract-getters";
 import { task } from "hardhat/config";
 import { FORK } from "../../helpers/hardhat-config-helpers";
 
@@ -29,7 +29,7 @@ task(`review-atokens`)
       await getAddressFromJson(network, POOL_ADDRESSES_PROVIDER_ID)
     );
 
-    const protocolDataProvider = await getAaveProtocolDataProvider(
+    const protocolDataProvider = await getSmartLendProtocolDataProvider(
       await poolAddressesProvider.getPoolDataProvider()
     );
 

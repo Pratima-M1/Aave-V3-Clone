@@ -15,7 +15,7 @@ import {
 } from "../../helpers/constants";
 import { getContract, waitForTx } from "../../helpers/utilities/tx";
 import {
-  AaveOracle,
+  SmartLendOracle,
   PoolAddressesProvider,
   PriceOracle__factory,
 } from "../../typechain";
@@ -66,7 +66,7 @@ const func: DeployFunction = async function ({
 };
 
 // This script can only be run successfully once per market, core version, and network
-func.id = `InitOracles:${MARKET_NAME}:aave-v3-core@${V3_CORE_VERSION}`;
+func.id = `InitOracles:${MARKET_NAME}:smartlend-v3-core@${V3_CORE_VERSION}`;
 
 func.tags = ["market", "oracles"];
 

@@ -12,9 +12,9 @@ import {
   SubTokenOutput,
   AssetType,
 } from "./types";
-import AaveMarket from "../markets/aave";
+import SmartLendMarket from "../markets/smartlend";
 import EthereumV3Config from "../markets/ethereum";
-import AaveTestMarket from "../markets/test";
+import SmartLendTestMarket from "../markets/test";
 import HarmonyMarket from "../markets/harmony";
 import AvalancheMarket from "../markets/avalanche";
 import FantomMarket from "../markets/fantom";
@@ -23,7 +23,7 @@ import OptimisticConfig from "../markets/optimistic";
 import ArbitrumConfig from "../markets/arbitrum";
 import BaseConfig from "../markets/base";
 import { isValidAddress } from "./utilities/utils";
-import { AaveProtocolDataProvider } from "../typechain";
+import { SmartLendProtocolDataProvider } from "../typechain";
 import {
   ATOKEN_PREFIX,
   STABLE_DEBT_PREFIX,
@@ -41,7 +41,7 @@ declare var hre: HardhatRuntimeEnvironment;
 
 export enum ConfigNames {
   Commons = "Commons",
-  Aave = "Aave",
+  SmartLend = "SmartLend",
   Test = "Test",
   Harmony = "Harmony",
   Avalanche = "Avalanche",
@@ -89,7 +89,7 @@ export const getAddressFromConfig = (
   );
   if (!value || !isValidAddress(value)) {
     throw Error(
-      `[aave-v3-deploy] Input parameter ${
+      `[smartlend-v3-deploy] Input parameter ${
         key ? `"${key}"` : ""
       } is missing or is not an address.`
     );
@@ -99,10 +99,10 @@ export const getAddressFromConfig = (
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
-    case ConfigNames.Aave:
-      return AaveMarket;
+    case ConfigNames.SmartLend:
+      return SmartLendMarket;
     case ConfigNames.Test:
-      return AaveTestMarket;
+      return SmartLendTestMarket;
     case ConfigNames.Harmony:
       return HarmonyMarket;
     case ConfigNames.Avalanche:
@@ -146,7 +146,7 @@ export const savePoolTokens = async (
   const dataProvider = (await hre.ethers.getContractAt(
     dataProviderArtifact.abi,
     dataProviderAddress
-  )) as AaveProtocolDataProvider;
+  )) as unknown as SmartLendProtocolDataProvider;
 
   const aTokenArtifact = await hre.deployments.getExtendedArtifact("AToken");
   const variableDebtTokenArtifact = await hre.deployments.getExtendedArtifact(

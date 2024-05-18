@@ -1,3 +1,4 @@
+
 .env
 
 #Buidler files
@@ -11,6 +12,8 @@ build/
 .idea
 ts-types/
 contracts/hardhat-dependency-compiler/
+deploy_copy
+contracts.zip
 
 coverage
 .coverage_artifacts

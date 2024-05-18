@@ -22,9 +22,9 @@ import {
   waitForTx,
 } from "../../helpers";
 import {
-  AaveEcosystemReserveController__factory,
-  AaveEcosystemReserveV2,
-  AaveEcosystemReserveV2__factory,
+  SmartLendEcosystemReserveController__factory,
+  SmartLendEcosystemReserveV2,
+  SmartLendEcosystemReserveV2__factory,
   InitializableAdminUpgradeabilityProxy__factory,
 } from "../../typechain";
 import { getAddress } from "ethers/lib/utils";
@@ -55,7 +55,7 @@ const func: DeployFunction = async function ({
   }
 
   if (treasuryAddress && getAddress(treasuryAddress) !== ZERO_ADDRESS) {
-    const treasuryContract = await AaveEcosystemReserveV2__factory.connect(
+    const treasuryContract = await SmartLendEcosystemReserveV2__factory.connect(
       treasuryAddress,
       await getFirstSigner()
     );
@@ -68,11 +68,11 @@ const func: DeployFunction = async function ({
     });
     await save(TREASURY_CONTROLLER_ID, {
       address: controller,
-      abi: AaveEcosystemReserveController__factory.abi,
+      abi: SmartLendEcosystemReserveController__factory.abi,
     });
     await save(TREASURY_IMPL_ID, {
       address: impl,
-      abi: AaveEcosystemReserveV2__factory.abi,
+      abi: SmartLendEcosystemReserveV2__factory.abi,
     });
 
     return true;
@@ -88,7 +88,7 @@ const func: DeployFunction = async function ({
   // Deploy Treasury Controller
   const treasuryController = await deploy(TREASURY_CONTROLLER_ID, {
     from: deployer,
-    contract: "AaveEcosystemReserveController",
+    contract: "SmartLendEcosystemReserveController",
     args: [treasuryOwner],
     ...COMMON_DEPLOY_PARAMS,
   });
@@ -96,7 +96,7 @@ const func: DeployFunction = async function ({
   // Deploy Treasury implementation and initialize proxy
   const treasuryImplArtifact = await deploy(TREASURY_IMPL_ID, {
     from: deployer,
-    contract: "AaveEcosystemReserveV2",
+    contract: "SmartLendEcosystemReserveV2",
     args: [],
     ...COMMON_DEPLOY_PARAMS,
   });
@@ -104,7 +104,7 @@ const func: DeployFunction = async function ({
   const treasuryImpl = (await hre.ethers.getContractAt(
     treasuryImplArtifact.abi,
     treasuryImplArtifact.address
-  )) as AaveEcosystemReserveV2;
+  )) as unknown as SmartLendEcosystemReserveV2;
 
   // Call to initialize at implementation contract to prevent other calls.
   await waitForTx(await treasuryImpl.initialize(ZERO_ADDRESS));
@@ -113,7 +113,7 @@ const func: DeployFunction = async function ({
   const proxy = (await hre.ethers.getContractAt(
     treasuryProxyArtifact.abi,
     treasuryProxyArtifact.address
-  )) as InitializableAdminUpgradeabilityProxy;
+  )) as unknown as InitializableAdminUpgradeabilityProxy;
 
   const initializePayload = treasuryImpl.interface.encodeFunctionData(
     "initialize",

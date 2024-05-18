@@ -1,15 +1,15 @@
-import { eEthereumNetwork, IAaveConfiguration } from "../../helpers/types";
-import { AaveMarket } from "../aave/index";
+import { eEthereumNetwork, ISmartLendConfiguration } from "../../helpers/types";
+import { SmartLendMarket } from "../smartlend/index";
 
 // ----------------
 // POOL--SPECIFIC PARAMS
 // ----------------
 
-export const EthereumV3Market: IAaveConfiguration = {
-  ...AaveMarket,
+export const EthereumV3Market: ISmartLendConfiguration = {
+  ...SmartLendMarket,
   ProviderId: 30,
   WrappedNativeTokenSymbol: "WETH",
-  MarketId: "Aave Ethereum Market",
+  MarketId: "SmartLend Ethereum Market",
   ATokenNamePrefix: "Ethereum",
   StableDebtTokenNamePrefix: "Ethereum",
   VariableDebtTokenNamePrefix: "Ethereum",

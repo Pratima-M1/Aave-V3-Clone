@@ -48,8 +48,8 @@ const func: DeployFunction = async function ({
     chainlinkAggregators
   );
 
-  // Deploy AaveOracle
-  await deploy(ORACLE_ID, {
+  // Deploy SmartLendOracle
+  const oracleArtifact = await deploy(ORACLE_ID, {
     from: deployer,
     args: [
       addressesProviderAddress,
@@ -60,13 +60,13 @@ const func: DeployFunction = async function ({
       parseUnits("1", OracleQuoteUnit),
     ],
     ...COMMON_DEPLOY_PARAMS,
-    contract: "AaveOracle",
+    contract: "SmartLendOracle",
   });
 
   return true;
 };
 
-func.id = `Oracles:${MARKET_NAME}:aave-v3-core@${V3_CORE_VERSION}`;
+func.id = `Oracles:${MARKET_NAME}:smartlend-core@${V3_CORE_VERSION}`;
 
 func.tags = ["market", "oracle"];
 

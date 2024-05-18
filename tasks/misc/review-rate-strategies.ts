@@ -8,7 +8,7 @@ import {
 import { IInterestRateStrategyParams } from "../../helpers/types";
 import { task } from "hardhat/config";
 import { waitForTx } from "../../helpers/utilities/tx";
-import { getAaveProtocolDataProvider } from "../../helpers/contract-getters";
+import { getSmartLendProtocolDataProvider } from "../../helpers/contract-getters";
 import { MARKET_NAME } from "../../helpers/env";
 import { FORK } from "../../helpers/hardhat-config-helpers";
 import { diff, formatters } from "jsondiffpatch";
@@ -38,7 +38,7 @@ task(`review-rate-strategies`, ``)
       const network = FORK ? FORK : (hre.network.name as eNetwork);
       const { deployer, poolAdmin } = await hre.getNamedAccounts();
       const checkOnlyReserves: string[] = checkOnly ? checkOnly.split(",") : [];
-      const dataProvider = await getAaveProtocolDataProvider();
+      const dataProvider = await getSmartLendProtocolDataProvider();
       const poolConfigurator = (await getPoolConfiguratorProxy()).connect(
         await hre.ethers.getSigner(poolAdmin)
       );

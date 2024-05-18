@@ -1,5 +1,8 @@
-import { eOptimismNetwork, IAaveConfiguration } from "./../../helpers/types";
-import AaveMarket from "../aave";
+import {
+  eOptimismNetwork,
+  ISmartLendConfiguration,
+} from "./../../helpers/types";
+import SmartLendMarket from "../smartlend";
 import {
   strategyDAI,
   strategyLINK,
@@ -7,15 +10,15 @@ import {
   strategyWBTC,
   strategyWETH,
   strategyUSDT,
-  strategyAAVE,
-} from "../aave/reservesConfigs";
+  strategySMARTLEND,
+} from "../smartlend/reservesConfigs";
 import { ZERO_ADDRESS } from "../../helpers";
 import { strategySUSD } from "./reservesConfig";
 
-export const OptimisticConfig: IAaveConfiguration = {
-  ...AaveMarket,
+export const OptimisticConfig: ISmartLendConfiguration = {
+  ...SmartLendMarket,
   ProviderId: 35,
-  MarketId: "Optimism Aave Market",
+  MarketId: "Optimism SmartLend Market",
   ATokenNamePrefix: "Optimism",
   StableDebtTokenNamePrefix: "Optimism",
   VariableDebtTokenNamePrefix: "Optimism",
@@ -27,7 +30,7 @@ export const OptimisticConfig: IAaveConfiguration = {
     WBTC: strategyWBTC,
     WETH: strategyWETH,
     USDT: strategyUSDT,
-    AAVE: strategyAAVE,
+    SMARTLEND: strategySMARTLEND,
     SUSD: strategySUSD,
   },
   ReserveAssets: {
@@ -38,7 +41,7 @@ export const OptimisticConfig: IAaveConfiguration = {
       WBTC: "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
       WETH: "0x4200000000000000000000000000000000000006",
       USDT: "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-      AAVE: "0x76FB31fb4af56892A25e32cFC43De717950c9278",
+      SMARTLEND: "0x76FB31fb4af56892A25e32cFC43De717950c9278",
       SUSD: "0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9",
     },
     [eOptimismNetwork.testnet]: {
@@ -68,7 +71,7 @@ export const OptimisticConfig: IAaveConfiguration = {
       WBTC: "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593",
       WETH: "0x13e3Ee699D1909E989722E753853AE30b17e08c5",
       USDT: "0xECef79E109e997bCA29c1c0897ec9d7b03647F5E",
-      AAVE: "0x338ed6787f463394D24813b297401B9F05a8C9d1",
+      SMARTLEND: "0x338ed6787f463394D24813b297401B9F05a8C9d1",
       // Using USDC / USD oracle due missing oracle for SUSD, but usage as collateral is deactivated
       SUSD: "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3",
     },

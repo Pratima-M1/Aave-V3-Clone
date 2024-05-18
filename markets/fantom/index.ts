@@ -1,13 +1,13 @@
-import { eFantomNetwork, IAaveConfiguration } from "../../helpers/types";
-import { AaveMarket } from "../aave/index";
+import { eFantomNetwork, ISmartLendConfiguration } from "../../helpers/types";
+import { SmartLendMarket } from "../smartlend/index";
 import {
   strategyDAI,
   strategyUSDT,
   strategyWETH,
-} from "../aave/reservesConfigs";
+} from "../smartlend/reservesConfigs";
 import { ZERO_ADDRESS } from "../../helpers/constants";
 import {
-  strategyAAVE,
+  strategySMARTLEND,
   strategyLINK,
   strategyUSDC,
   strategyWBTC,
@@ -19,11 +19,11 @@ import {
 // POOL--SPECIFIC PARAMS
 // ----------------
 
-export const FantomMarket: IAaveConfiguration = {
-  ...AaveMarket,
+export const FantomMarket: ISmartLendConfiguration = {
+  ...SmartLendMarket,
   ProviderId: 33,
   WrappedNativeTokenSymbol: "WFTM",
-  MarketId: "Fantom Aave Market",
+  MarketId: "Fantom SmartLend Market",
   ATokenNamePrefix: "Fantom",
   StableDebtTokenNamePrefix: "Fantom",
   VariableDebtTokenNamePrefix: "Fantom",
@@ -35,7 +35,7 @@ export const FantomMarket: IAaveConfiguration = {
     WBTC: strategyWBTC,
     WETH: strategyWETH,
     USDT: strategyUSDT,
-    AAVE: strategyAAVE,
+    SMARTLEND: strategySMARTLEND,
     WFTM: strategyWFTM,
     CRV: strategyCRV,
     SUSHI: strategySUSHI,
@@ -48,13 +48,13 @@ export const FantomMarket: IAaveConfiguration = {
       WBTC: "0x321162Cd933E2Be498Cd2267a90534A804051b11",
       WETH: "0x74b23882a30290451A17c44f4F05243b6b58C76d",
       USDT: "0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-      AAVE: "0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B",
+      SMARTLEND: "0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B",
       WFTM: "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
       SUSHI: "0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
       CRV: "0x1E4F97b9f9F913c46F1632781732927B9019C68b",
     },
     [eFantomNetwork.testnet]: {
-      AAVE: ZERO_ADDRESS,
+      SMARTLEND: ZERO_ADDRESS,
       DAI: ZERO_ADDRESS,
       LINK: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
@@ -66,7 +66,7 @@ export const FantomMarket: IAaveConfiguration = {
   },
   ChainlinkAggregator: {
     [eFantomNetwork.main]: {
-      AAVE: "0xE6ecF7d2361B6459cBb3b4fb065E0eF4B175Fe74",
+      SMARTLEND: "0xE6ecF7d2361B6459cBb3b4fb065E0eF4B175Fe74",
       DAI: "0x91d5DEFAFfE2854C7D02F50c80FA1fdc8A721e52",
       LINK: "0x221C773d8647BC3034e91a0c47062e26D20d97B4",
       USDC: "0x2553f4eeb82d5A26427b8d1106C51499CBa5D99c",

@@ -26,12 +26,15 @@ const func: DeployFunction = async function ({
     return;
   }
   // Deploy UiIncentiveDataProvider getter helper
-  await deploy("UiIncentiveDataProviderV3", {
-    from: deployer,
-  });
+  const uiIncentiveDataProviderArtifact = await deploy(
+    "UiIncentiveDataProviderV3",
+    {
+      from: deployer,
+    }
+  );
 
   // Deploy UiPoolDataProvider getter helper
-  await deploy("UiPoolDataProviderV3", {
+  const uiPoolDataProviderArtifact = await deploy("UiPoolDataProviderV3", {
     from: deployer,
     args: [
       chainlinkAggregatorProxy[network],

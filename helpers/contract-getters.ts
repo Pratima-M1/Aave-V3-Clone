@@ -2,7 +2,7 @@ import { getFirstSigner } from "./utilities/signer";
 import { StakedTokenTransferStrategy } from "./../typechain";
 import { PullRewardsTransferStrategy } from "./../typechain";
 import {
-  AaveOracle,
+  SmartLendOracle,
   ACLManager,
   AToken,
   BorrowLogic,
@@ -22,7 +22,7 @@ import {
   VariableDebtToken,
   WETH9,
   WETH9Mocked,
-  AaveProtocolDataProvider,
+  SmartLendProtocolDataProvider,
   MintableERC20,
   DefaultReserveInterestRateStrategy,
   MockFlashLoanReceiver,
@@ -51,8 +51,8 @@ import {
   INCENTIVES_PULL_REWARDS_STRATEGY_ID,
   INCENTIVES_PROXY_ID,
   INCENTIVES_STAKED_TOKEN_STRATEGY_ID,
-  STAKE_AAVE_PROXY,
-  STAKE_AAVE_IMPL_V3,
+  STAKE_SMARTLEND_PROXY,
+  STAKE_SMARTLEND_IMPL_V3,
   L2_ENCODER,
   FAUCET_OWNABLE_ID,
 } from "./deploy-ids";
@@ -82,7 +82,7 @@ export const getERC20 = async (
   address: tEthereumAddress
 ): Promise<IERC20Detailed> =>
   getContract(
-    "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol:IERC20Detailed",
+    "../core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol:IERC20Detailed",
     address
   );
 
@@ -145,7 +145,7 @@ export const getPool = async (address?: tEthereumAddress): Promise<Pool> =>
 
 export const getPriceOracle = async (
   address?: tEthereumAddress
-): Promise<AaveOracle> => getContract("PriceOracle", address);
+): Promise<SmartLendOracle> => getContract("PriceOracle", address);
 
 export const getIRStrategy = async (
   address: tEthereumAddress
@@ -160,23 +160,23 @@ export const getIErc20Detailed = async (
   address: tEthereumAddress
 ): Promise<IERC20Detailed> =>
   getContract(
-    "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol:IERC20Detailed",
+    "../core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol:IERC20Detailed",
     address
   );
 
-export const getAaveProtocolDataProvider = async (
+export const getSmartLendProtocolDataProvider = async (
   address?: tEthereumAddress
-): Promise<AaveProtocolDataProvider> =>
+): Promise<SmartLendProtocolDataProvider> =>
   getContract(
-    "AaveProtocolDataProvider",
+    "SmartLendProtocolDataProvider",
     address || (await hre.deployments.get(POOL_DATA_PROVIDER)).address
   );
 
-export const getAaveOracle = async (
+export const getSmartLendOracle = async (
   address?: tEthereumAddress
-): Promise<AaveOracle> =>
+): Promise<SmartLendOracle> =>
   getContract(
-    "AaveOracle",
+    "SmartLendOracle",
     address || (await hre.deployments.get(ORACLE_ID)).address
   );
 
@@ -318,11 +318,11 @@ export const getStakedRewardsStrategy = async (
       (await hre.deployments.get(INCENTIVES_STAKED_TOKEN_STRATEGY_ID)).address
   );
 
-export const getStakeAave = async (
+export const getStakeSmartLend = async (
   address?: string
 ): Promise<StakedTokenV2Rev3> => {
-  const proxyArtifact = await hre.deployments.get(STAKE_AAVE_PROXY);
-  const implArtifact = await hre.deployments.get(STAKE_AAVE_IMPL_V3);
+  const proxyArtifact = await hre.deployments.get(STAKE_SMARTLEND_PROXY);
+  const implArtifact = await hre.deployments.get(STAKE_SMARTLEND_IMPL_V3);
   return hre.ethers.getContractAt(
     implArtifact.abi,
     address || proxyArtifact.address

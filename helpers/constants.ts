@@ -33,7 +33,7 @@ export const MAX_UINT_AMOUNT =
   "115792089237316195423570985008687907853269984665640564039457584007913129639935";
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const ONE_ADDRESS = "0x0000000000000000000000000000000000000001";
-export const AAVE_REFERRAL = "0";
+export const SMARTLEND_REFERRAL = "0";
 
 export const WRAPPED_NATIVE_TOKEN_PER_NETWORK: { [network: string]: string } = {
   [eEthereumNetwork.kovan]: ZERO_ADDRESS,
@@ -52,7 +52,7 @@ export const ZERO_BYTES_32 =
   "0x0000000000000000000000000000000000000000000000000000000000000000";
 
 export const MOCK_CHAINLINK_AGGREGATORS_PRICES: { [key: string]: string } = {
-  AAVE: parseUnits("300", 8).toString(),
+  SMARTLEND: parseUnits("300", 8).toString(),
   WETH: parseUnits("4000", 8).toString(),
   ETH: parseUnits("4000", 8).toString(),
   DAI: parseUnits("1", 8).toString(),

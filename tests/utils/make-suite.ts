@@ -7,7 +7,7 @@ import { Signer } from "ethers";
 import { evmRevert, evmSnapshot } from "../../helpers/utilities/tx";
 import { tEthereumAddress } from "../../helpers/types";
 import { Pool } from "../../typechain";
-import { AaveProtocolDataProvider } from "../../typechain";
+import { SmartLendProtocolDataProvider } from "../../typechain";
 import { AToken } from "../../typechain";
 import { PoolConfigurator } from "../../typechain";
 
@@ -15,7 +15,7 @@ import chai from "chai";
 import { PoolAddressesProvider } from "../../typechain";
 import { PoolAddressesProviderRegistry } from "../../typechain";
 import {
-  AaveOracle,
+  SmartLendOracle,
   IERC20,
   StableDebtToken,
   VariableDebtToken,
@@ -55,8 +55,8 @@ export interface TestEnv {
   users: SignerWithAddress[];
   pool: Pool;
   configurator: PoolConfigurator;
-  oracle: AaveOracle;
-  helpersContract: AaveProtocolDataProvider;
+  oracle: SmartLendOracle;
+  helpersContract: SmartLendProtocolDataProvider;
   weth: WETH9;
   aWETH: AToken;
   dai: IERC20;
@@ -65,7 +65,7 @@ export interface TestEnv {
   stableDebtDai: StableDebtToken;
   aUsdc: AToken;
   usdc: IERC20;
-  aave: IERC20;
+  smartlend: IERC20;
   addressesProvider: PoolAddressesProvider;
   registry: PoolAddressesProviderRegistry;
   wrappedTokenGateway: WrappedTokenGateway;
@@ -85,8 +85,8 @@ const testEnv: TestEnv = {
   users: [] as SignerWithAddress[],
   pool: {} as Pool,
   configurator: {} as PoolConfigurator,
-  helpersContract: {} as AaveProtocolDataProvider,
-  oracle: {} as AaveOracle,
+  helpersContract: {} as SmartLendProtocolDataProvider,
+  oracle: {} as SmartLendOracle,
   weth: {} as WETH9,
   aWETH: {} as AToken,
   dai: {} as IERC20,
@@ -95,7 +95,7 @@ const testEnv: TestEnv = {
   stableDebtDai: {} as StableDebtToken,
   aUsdc: {} as AToken,
   usdc: {} as IERC20,
-  aave: {} as IERC20,
+  smartlend: {} as IERC20,
   addressesProvider: {} as PoolAddressesProvider,
   registry: {} as PoolAddressesProviderRegistry,
   wrappedTokenGateway: {} as WrappedTokenGateway,
@@ -162,14 +162,14 @@ export async function initializeMakeSuite() {
     addressesProviderRegistryArtifact.address
   )) as PoolAddressesProviderRegistry;
   testEnv.oracle = (await ethers.getContractAt(
-    "AaveOracle",
+    "SmartLendOracle",
     priceOracleArtifact.address
-  )) as AaveOracle;
+  )) as SmartLendOracle;
 
   testEnv.helpersContract = (await ethers.getContractAt(
     dataProviderArtifact.abi,
     dataProviderArtifact.address
-  )) as AaveProtocolDataProvider;
+  )) as SmartLendProtocolDataProvider;
 
   const allTokens = await testEnv.helpersContract.getAllATokens();
   const aDaiAddress = allTokens.find(
@@ -195,8 +195,8 @@ export async function initializeMakeSuite() {
   const usdcAddress = reservesTokens.find(
     (token) => token.symbol === "USDC"
   )?.tokenAddress;
-  const aaveAddress = reservesTokens.find(
-    (token) => token.symbol === "AAVE"
+  const smartlendAddress = reservesTokens.find(
+    (token) => token.symbol === "SMARTLEND"
   )?.tokenAddress;
   const wethAddress = reservesTokens.find(
     (token) => token.symbol === "WETH"
@@ -205,7 +205,7 @@ export async function initializeMakeSuite() {
   if (!aDaiAddress || !aWEthAddress || !aUsdcAddress) {
     process.exit(1);
   }
-  if (!daiAddress || !usdcAddress || !aaveAddress || !wethAddress) {
+  if (!daiAddress || !usdcAddress || !smartlendAddress || !wethAddress) {
     process.exit(1);
   }
 
@@ -217,7 +217,7 @@ export async function initializeMakeSuite() {
 
   testEnv.dai = await getERC20(daiAddress);
   testEnv.usdc = await getERC20(usdcAddress);
-  testEnv.aave = await getERC20(aaveAddress);
+  testEnv.smartlend = await getERC20(smartlendAddress);
   testEnv.weth = await getWETH(wethAddress);
 
   if (isTestnetMarket(poolConfig)) {

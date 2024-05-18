@@ -1,15 +1,15 @@
-import { eBaseNetwork, IAaveConfiguration } from "./../../helpers/types";
-import AaveMarket from "../aave";
+import { eBaseNetwork, ISmartLendConfiguration } from "./../../helpers/types";
+import SmartLendMarket from "../smartlend";
 import { ZERO_ADDRESS } from "../../helpers";
 import {
   strategyUSDC,
   strategyWETH,
   strategyCBETH,
-} from "../aave/reservesConfigs";
+} from "../smartlend/reservesConfigs";
 
-export const BaseConfig: IAaveConfiguration = {
-  ...AaveMarket,
-  MarketId: "Base Aave Market",
+export const BaseConfig: ISmartLendConfiguration = {
+  ...SmartLendMarket,
+  MarketId: "Base SmartLend Market",
   ATokenNamePrefix: "Base",
   StableDebtTokenNamePrefix: "Base",
   VariableDebtTokenNamePrefix: "Base",

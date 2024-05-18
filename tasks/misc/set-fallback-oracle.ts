@@ -1,4 +1,4 @@
-import { getAaveOracle } from "./../../helpers/contract-getters";
+import { getSmartLendOracle } from "./../../helpers/contract-getters";
 import { getAddressFromJson, waitForTx } from "../../helpers/utilities/tx";
 import { task } from "hardhat/config";
 import { FORK } from "../../helpers/hardhat-config-helpers";
@@ -18,15 +18,15 @@ task(`set-fallback-oracle`)
       ? getAddress(address)
       : ZERO_ADDRESS;
 
-    const aaveOracle = await (
-      await getAaveOracle(await getAddressFromJson(network, ORACLE_ID))
+    const smartlendOracle = await (
+      await getSmartLendOracle(await getAddressFromJson(network, ORACLE_ID))
     ).connect(signer);
 
     await waitForTx(
-      await aaveOracle.setFallbackOracle(newFallbackOracleAddress)
+      await smartlendOracle.setFallbackOracle(newFallbackOracleAddress)
     );
 
-    const updatedFallbackOracle = await aaveOracle.getFallbackOracle();
+    const updatedFallbackOracle = await smartlendOracle.getFallbackOracle();
 
     console.table({
       "Fallback oracle": updatedFallbackOracle,

@@ -67,6 +67,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: ["0", deployer],
     ...COMMON_DEPLOY_PARAMS,
   });
+
   const signer = await hre.ethers.getSigner(deployer);
 
   const addressesProviderInstance = (
@@ -87,13 +88,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     addressesProviderArtifact.address
   );
 
-  // 4. Deploy AaveProtocolDataProvider getters contract
+  // 4. Deploy SmartLendProtocolDataProvider getters contract
   const protocolDataProvider = await deploy(POOL_DATA_PROVIDER, {
     from: deployer,
-    contract: "AaveProtocolDataProvider",
+    contract: "SmartLendProtocolDataProvider",
     args: [addressesProviderArtifact.address],
     ...COMMON_DEPLOY_PARAMS,
   });
+
   const currentProtocolDataProvider =
     await addressesProviderInstance.getPoolDataProvider();
 
@@ -112,7 +114,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 // This script can only be run successfully once per market, core version, and network
-func.id = `PoolAddressesProvider:${MARKET_NAME}:aave-v3-core@${V3_CORE_VERSION}`;
+func.id = `PoolAddressesProvider:${MARKET_NAME}:smartlend-v3-core@${V3_CORE_VERSION}`;
 
 func.tags = ["market", "provider"];
 

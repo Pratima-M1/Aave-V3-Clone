@@ -1,4 +1,7 @@
-import { rateStrategyVolatileOne, rateStrategyStableOne } from "./../aave/rateStrategies";
+import {
+  rateStrategyVolatileOne,
+  rateStrategyStableOne,
+} from "../smartlend/rateStrategies";
 import { eContractid, IReserveParams } from "../../helpers/types";
 
 export const strategyWAVAX: IReserveParams = {
@@ -55,7 +58,7 @@ export const strategyUSDC: IReserveParams = {
   borrowableIsolation: true,
 };
 
-export const strategyAAVE: IReserveParams = {
+export const strategySMARTLEND: IReserveParams = {
   strategy: rateStrategyVolatileOne,
   baseLTVAsCollateral: "6000",
   liquidationThreshold: "7000",

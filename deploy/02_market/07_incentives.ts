@@ -4,7 +4,7 @@ import {
   EMISSION_MANAGER_ID,
   INCENTIVES_STAKED_TOKEN_STRATEGY_ID,
   POOL_ADDRESSES_PROVIDER_ID,
-  STAKE_AAVE_PROXY,
+  STAKE_SMARTLEND_PROXY,
 } from "./../../helpers/deploy-ids";
 import {
   EmissionManager,
@@ -68,6 +68,7 @@ const func: DeployFunction = async function ({
     args: [deployer],
     ...COMMON_DEPLOY_PARAMS,
   });
+
   const emissionManager = (await hre.ethers.getContractAt(
     emissionManagerArtifact.abi,
     emissionManagerArtifact.address
@@ -80,6 +81,7 @@ const func: DeployFunction = async function ({
     args: [emissionManagerArtifact.address],
     ...COMMON_DEPLOY_PARAMS,
   });
+
   const incentivesImpl = (await hre.ethers.getContractAt(
     incentivesImplArtifact.abi,
     incentivesImplArtifact.address
@@ -130,34 +132,41 @@ const func: DeployFunction = async function ({
   );
 
   if (!isLive) {
-    await deploy(INCENTIVES_PULL_REWARDS_STRATEGY_ID, {
-      from: deployer,
-      contract: "PullRewardsTransferStrategy",
-      args: [
-        rewardsProxyAddress,
-        incentivesEmissionManager,
-        incentivesRewardsVault,
-      ],
-      ...COMMON_DEPLOY_PARAMS,
-    });
-    const stakedAaveAddress = isLive
-      ? getParamPerNetwork(poolConfig.StkAaveProxy, network)
-      : (await deployments.getOrNull(STAKE_AAVE_PROXY))?.address;
-
-    if (stakedAaveAddress) {
-      await deploy(INCENTIVES_STAKED_TOKEN_STRATEGY_ID, {
+    const pullrewardArtifact = await deploy(
+      INCENTIVES_PULL_REWARDS_STRATEGY_ID,
+      {
         from: deployer,
-        contract: "StakedTokenTransferStrategy",
+        contract: "PullRewardsTransferStrategy",
         args: [
           rewardsProxyAddress,
           incentivesEmissionManager,
-          stakedAaveAddress,
+          incentivesRewardsVault,
         ],
         ...COMMON_DEPLOY_PARAMS,
-      });
+      }
+    );
+
+    const stakedSmartLendAddress = isLive
+      ? getParamPerNetwork(poolConfig.StkSmartLendProxy, network)
+      : (await deployments.getOrNull(STAKE_SMARTLEND_PROXY))?.address;
+
+    if (stakedSmartLendAddress) {
+      const incentivetokenAritfact = await deploy(
+        INCENTIVES_STAKED_TOKEN_STRATEGY_ID,
+        {
+          from: deployer,
+          contract: "StakedTokenTransferStrategy",
+          args: [
+            rewardsProxyAddress,
+            incentivesEmissionManager,
+            stakedSmartLendAddress,
+          ],
+          ...COMMON_DEPLOY_PARAMS,
+        }
+      );
     } else {
       console.log(
-        "[WARNING] Missing StkAave address. Skipping StakedTokenTransferStrategy deployment."
+        "[WARNING] Missing StkSmartLend address. Skipping StakedTokenTransferStrategy deployment."
       );
     }
   }
@@ -171,7 +180,7 @@ const func: DeployFunction = async function ({
   return true;
 };
 
-func.id = `Incentives:${MARKET_NAME}:aave-v3-periphery@${V3_PERIPHERY_VERSION}`;
+func.id = `Incentives:${MARKET_NAME}:smartlend-v3-periphery@${V3_PERIPHERY_VERSION}`;
 
 func.tags = ["market", "IncentivesProxy"];
 func.dependencies = [];

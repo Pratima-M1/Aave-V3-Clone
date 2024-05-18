@@ -10,7 +10,7 @@ const func: DeployFunction = async function ({
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  await deploy("SupplyLogic", {
+  const supplyLogicArtifact = await deploy("SupplyLogic", {
     from: deployer,
     args: [],
     ...COMMON_DEPLOY_PARAMS,
@@ -22,27 +22,27 @@ const func: DeployFunction = async function ({
     ...COMMON_DEPLOY_PARAMS,
   });
 
-  await deploy("LiquidationLogic", {
+  const liquidationLogicArtifact = await deploy("LiquidationLogic", {
     from: deployer,
     ...COMMON_DEPLOY_PARAMS,
   });
 
-  await deploy("EModeLogic", {
+  const emodeLogicArtifact = await deploy("EModeLogic", {
     from: deployer,
     ...COMMON_DEPLOY_PARAMS,
   });
 
-  await deploy("BridgeLogic", {
+  const bridgeLogicArtifact = await deploy("BridgeLogic", {
     from: deployer,
     ...COMMON_DEPLOY_PARAMS,
   });
 
-  await deploy("ConfiguratorLogic", {
+  const configuratorLogicArtifact = await deploy("ConfiguratorLogic", {
     from: deployer,
     ...COMMON_DEPLOY_PARAMS,
   });
 
-  await deploy("FlashLoanLogic", {
+  const flashloanLogicArtifact = await deploy("FlashLoanLogic", {
     from: deployer,
     ...COMMON_DEPLOY_PARAMS,
     libraries: {
@@ -50,7 +50,7 @@ const func: DeployFunction = async function ({
     },
   });
 
-  await deploy("PoolLogic", {
+  const poolLogicArtifact = await deploy("PoolLogic", {
     from: deployer,
     ...COMMON_DEPLOY_PARAMS,
   });

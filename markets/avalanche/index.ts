@@ -1,16 +1,19 @@
-import { eAvalancheNetwork, IAaveConfiguration } from "./../../helpers/types";
-import { AaveMarket } from "../aave/index";
+import {
+  eAvalancheNetwork,
+  ISmartLendConfiguration,
+} from "./../../helpers/types";
+import { SmartLendMarket } from "../smartlend/index";
 import { ZERO_ADDRESS } from "../../helpers/constants";
 import {
   strategyDAI,
   strategyWETH,
   strategyUSDT,
-} from "../aave/reservesConfigs";
+} from "../smartlend/reservesConfigs";
 import {
   strategyLINK,
   strategyWAVAX,
   strategyUSDC,
-  strategyAAVE,
+  strategySMARTLEND,
   strategyWBTC,
 } from "./reservesConfigs";
 
@@ -18,11 +21,11 @@ import {
 // POOL--SPECIFIC PARAMS
 // ----------------
 
-export const AvalancheMarket: IAaveConfiguration = {
-  ...AaveMarket,
+export const AvalancheMarket: ISmartLendConfiguration = {
+  ...SmartLendMarket,
   ProviderId: 32,
   WrappedNativeTokenSymbol: "WAVAX",
-  MarketId: "Avalanche Aave Market",
+  MarketId: "Avalanche SmartLend Market",
   ATokenNamePrefix: "Avalanche",
   StableDebtTokenNamePrefix: "Avalanche",
   VariableDebtTokenNamePrefix: "Avalanche",
@@ -34,7 +37,7 @@ export const AvalancheMarket: IAaveConfiguration = {
     WBTC: strategyWBTC,
     WETH: strategyWETH,
     USDT: strategyUSDT,
-    AAVE: strategyAAVE,
+    SMARTLEND: strategySMARTLEND,
     WAVAX: strategyWAVAX,
   },
   ReserveAssets: {
@@ -45,11 +48,11 @@ export const AvalancheMarket: IAaveConfiguration = {
       WBTC: "0x50b7545627a5162F82A992c33b87aDc75187B218",
       WETH: "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
       USDT: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
-      AAVE: "0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
+      SMARTLEND: "0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
       WAVAX: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     },
     [eAvalancheNetwork.fuji]: {
-      AAVE: ZERO_ADDRESS,
+      SMARTLEND: ZERO_ADDRESS,
       DAI: ZERO_ADDRESS,
       LINK: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
@@ -67,7 +70,7 @@ export const AvalancheMarket: IAaveConfiguration = {
       WBTC: "0x2779D32d5166BAaa2B2b658333bA7e6Ec0C65743",
       WETH: "0x976B3D034E162d8bD72D6b9C989d545b839003b0",
       USDT: "0xEBE676ee90Fe1112671f19b6B7459bC678B67e8a",
-      AAVE: "0x3CA13391E9fb38a75330fb28f8cc2eB3D9ceceED",
+      SMARTLEND: "0x3CA13391E9fb38a75330fb28f8cc2eB3D9ceceED",
       WAVAX: "0x0A77230d17318075983913bC2145DB16C7366156",
     },
   },

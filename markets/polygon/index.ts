@@ -1,10 +1,10 @@
-import { ePolygonNetwork, IAaveConfiguration } from "../../helpers/types";
-import { AaveMarket } from "../aave/index";
+import { ePolygonNetwork, ISmartLendConfiguration } from "../../helpers/types";
+import { SmartLendMarket } from "../smartlend/index";
 import {
   strategyDAI,
   strategyUSDT,
   strategyWETH,
-} from "../aave/reservesConfigs";
+} from "../smartlend/reservesConfigs";
 import { ZERO_ADDRESS } from "../../helpers/constants";
 import {
   strategyAGEUR,
@@ -18,18 +18,18 @@ import {
   strategySUSHI,
   strategyWMATIC,
   strategyUSDC,
-  strategyAAVE,
+  strategySMARTLEND,
   strategyWBTC,
 } from "./reservesConfigs";
 // ----------------
 // POOL--SPECIFIC PARAMS
 // ----------------
 
-export const PolygonMarket: IAaveConfiguration = {
-  ...AaveMarket,
+export const PolygonMarket: ISmartLendConfiguration = {
+  ...SmartLendMarket,
   ProviderId: 34,
   WrappedNativeTokenSymbol: "WMATIC",
-  MarketId: "Polygon Aave Market",
+  MarketId: "Polygon SmartLend Market",
   ATokenNamePrefix: "Polygon",
   StableDebtTokenNamePrefix: "Polygon",
   VariableDebtTokenNamePrefix: "Polygon",
@@ -41,7 +41,7 @@ export const PolygonMarket: IAaveConfiguration = {
     WBTC: strategyWBTC,
     WETH: strategyWETH,
     USDT: strategyUSDT,
-    AAVE: strategyAAVE,
+    SMARTLEND: strategySMARTLEND,
     WMATIC: strategyWMATIC,
     CRV: strategyCRV,
     SUSHI: strategySUSHI,
@@ -54,7 +54,7 @@ export const PolygonMarket: IAaveConfiguration = {
   },
   ReserveAssets: {
     [ePolygonNetwork.polygon]: {
-      AAVE: "0xD6DF932A45C0f255f85145f286eA0b292B21C90B",
+      SMARTLEND: "0xD6DF932A45C0f255f85145f286eA0b292B21C90B",
       DAI: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
       LINK: "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39",
       USDC: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -72,7 +72,7 @@ export const PolygonMarket: IAaveConfiguration = {
       AGEUR: "0xE0B52e49357Fd4DAf2c15e02058DCE6BC0057db4",
     },
     [ePolygonNetwork.mumbai]: {
-      AAVE: ZERO_ADDRESS,
+      SMARTLEND: ZERO_ADDRESS,
       DAI: ZERO_ADDRESS,
       LINK: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
@@ -102,7 +102,7 @@ export const PolygonMarket: IAaveConfiguration = {
   },
   ChainlinkAggregator: {
     [ePolygonNetwork.polygon]: {
-      AAVE: "0x72484B12719E23115761D5DA1646945632979bB6",
+      SMARTLEND: "0x72484B12719E23115761D5DA1646945632979bB6",
       DAI: "0x4746DeC9e833A82EC7C2C1356372CcF2cfcD2F3D",
       LINK: "0xd9FFdb71EbE7496cC440152d43986Aae0AB76665",
       USDC: "0xfE4A8cc5b5B2366C1B58Bea3858e81843581b2F7",

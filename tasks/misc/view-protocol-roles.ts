@@ -1,4 +1,4 @@
-import { WrappedTokenGatewayV3__factory } from "./../../typechain/factories/@aave/periphery-v3/contracts/misc/WrappedTokenGatewayV3__factory";
+import { WrappedTokenGatewayV3__factory } from "./../../typechain/factories/periphery/misc/WrappedTokenGatewayV3__factory";
 import { getFirstSigner } from "./../../helpers/utilities/signer";
 import { getAddressFromJson } from "./../../helpers/utilities/tx";
 import {
@@ -7,7 +7,7 @@ import {
   ZERO_ADDRESS,
 } from "./../../helpers/constants";
 import {
-  AaveEcosystemReserveController,
+  SmartLendEcosystemReserveController,
   EmissionManager,
   WrappedTokenGatewayV3,
 } from "./../../typechain";
@@ -104,12 +104,12 @@ task(
     deployerSigner
   )) as InitializableAdminUpgradeabilityProxy;
   const treasuryController = (await hre.ethers.getContractAt(
-    "AaveEcosystemReserveController",
+    "SmartLendEcosystemReserveController",
     (
       await hre.deployments.get(TREASURY_CONTROLLER_ID)
     ).address,
     deployerSigner
-  )) as AaveEcosystemReserveController;
+  )) as SmartLendEcosystemReserveController;
   let wrappedTokenGateway: WrappedTokenGatewayV3;
   try {
     wrappedTokenGateway = await getWrappedTokenGateway();

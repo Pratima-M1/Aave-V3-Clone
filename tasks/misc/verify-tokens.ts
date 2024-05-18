@@ -1,7 +1,7 @@
 import { task } from "hardhat/config";
 import {
   eNetwork,
-  getAaveProtocolDataProvider,
+  getSmartLendProtocolDataProvider,
   getAddressFromJson,
   getPoolConfiguratorProxy,
   POOL_CONFIGURATOR_PROXY_ID,
@@ -11,7 +11,7 @@ import {
 task(`verify-tokens`).setAction(
   async (_, { deployments, getNamedAccounts, ...hre }) => {
     const network = hre.network.name as eNetwork;
-    const dataProvider = await getAaveProtocolDataProvider(
+    const dataProvider = await getSmartLendProtocolDataProvider(
       await getAddressFromJson(network, POOL_DATA_PROVIDER)
     );
     const poolConfigurator = await getPoolConfiguratorProxy(

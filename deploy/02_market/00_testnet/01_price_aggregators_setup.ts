@@ -51,25 +51,29 @@ const func: DeployFunction = async function ({
   // Iterate each token symbol and deploy a mock aggregator
   await Bluebird.each(symbols, async (symbol) => {
     const price =
-      symbol === "StkAave"
-        ? MOCK_CHAINLINK_AGGREGATORS_PRICES["AAVE"]
+      symbol === "StkSmartLend"
+        ? MOCK_CHAINLINK_AGGREGATORS_PRICES["SMARTLEND"]
         : MOCK_CHAINLINK_AGGREGATORS_PRICES[symbol];
     if (!price) {
       throw `[ERROR] Missing mock price for asset ${symbol} at MOCK_CHAINLINK_AGGREGATORS_PRICES constant located at src/constants.ts`;
     }
-    await deploy(`${symbol}${TESTNET_PRICE_AGGR_PREFIX}`, {
-      args: [price],
-      from: deployer,
-      ...COMMON_DEPLOY_PARAMS,
-      contract: "MockAggregator",
-    });
+    const tokenAggregatorArtifact = await deploy(
+      `${symbol}${TESTNET_PRICE_AGGR_PREFIX}`,
+      {
+        args: [price],
+        from: deployer,
+        ...COMMON_DEPLOY_PARAMS,
+        contract: "MockAggregator",
+      }
+    );
+    console.log(price);
   });
 
   return true;
 };
 
 // This script can only be run successfully once per market, core version, and network
-func.id = `MockPriceAggregators:${MARKET_NAME}:aave-v3-core@${V3_CORE_VERSION}`;
+func.id = `MockPriceAggregators:${MARKET_NAME}:smartlend-v3-core@${V3_CORE_VERSION}`;
 
 func.tags = ["market", "init-testnet", "price-aggregators-setup"];
 

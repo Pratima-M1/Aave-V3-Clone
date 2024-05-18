@@ -29,7 +29,7 @@ const func: DeployFunction = async function ({
 
   // Deploy Mock Flash Loan Receiver if testnet deployment
   if (!hre.config.networks[network].live || poolConfig.TestnetMarket) {
-    await deploy("MockFlashLoanReceiver", {
+    const mockflashArtifact = await deploy("MockFlashLoanReceiver", {
       from: deployer,
       args: [await (await deployments.get(POOL_ADDRESSES_PROVIDER_ID)).address],
       ...COMMON_DEPLOY_PARAMS,
@@ -40,7 +40,7 @@ const func: DeployFunction = async function ({
 };
 
 // This script can only be run successfully once per market, core version, and network
-func.id = `PeripheryInit:${MARKET_NAME}:aave-v3-periphery@${V3_PERIPHERY_VERSION}`;
+func.id = `PeripheryInit:${MARKET_NAME}:smartlend-v3-periphery@${V3_PERIPHERY_VERSION}`;
 
 func.tags = ["market", "init-periphery"];
 

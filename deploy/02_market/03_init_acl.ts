@@ -80,7 +80,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 // This script can only be run successfully once per market, core version, and network
-func.id = `ACLManager:${MARKET_NAME}:aave-v3-core@${V3_CORE_VERSION}`;
+func.id = `ACLManager:${MARKET_NAME}:smartlend-v3-core@${V3_CORE_VERSION}`;
 
 func.tags = ["market", "acl"];
 

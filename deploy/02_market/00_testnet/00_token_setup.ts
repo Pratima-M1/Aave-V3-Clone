@@ -1,5 +1,5 @@
 import {
-  STAKE_AAVE_PROXY,
+  STAKE_SMARTLEND_PROXY,
   TESTNET_REWARD_TOKEN_PREFIX,
 } from "../../../helpers/deploy-ids";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
@@ -21,7 +21,7 @@ import {
 import Bluebird from "bluebird";
 import {
   deployInitializableAdminUpgradeabilityProxy,
-  setupStkAave,
+  setupStkSmartLend,
 } from "../../../helpers/contract-deployments";
 import { MARKET_NAME, PERMISSIONED_FAUCET } from "../../../helpers/env";
 
@@ -79,7 +79,7 @@ const func: DeployFunction = async function ({
 
     if (symbol == poolConfig.WrappedNativeTokenSymbol) {
       console.log("Deploy of WETH9 mock");
-      await deploy(
+      const wethArtifact = await deploy(
         `${poolConfig.WrappedNativeTokenSymbol}${TESTNET_TOKEN_PREFIX}`,
         {
           from: deployer,
@@ -94,7 +94,7 @@ const func: DeployFunction = async function ({
       );
     } else {
       console.log("Deploy of TestnetERC20 contract", symbol);
-      await deploy(`${symbol}${TESTNET_TOKEN_PREFIX}`, {
+      const tokenArtifact = await deploy(`${symbol}${TESTNET_TOKEN_PREFIX}`, {
         from: deployer,
         contract: "TestnetERC20",
         args: [
@@ -117,29 +117,36 @@ const func: DeployFunction = async function ({
 
     for (let y = 0; y < rewardSymbols.length; y++) {
       const reward = rewardSymbols[y];
-      await deploy(`${reward}${TESTNET_REWARD_TOKEN_PREFIX}`, {
-        from: deployer,
-        contract: "TestnetERC20",
-        args: [reward, reward, 18, faucetOwnable.address],
-        ...COMMON_DEPLOY_PARAMS,
+      const rewardTokenArtifact = await deploy(
+        `${reward}${TESTNET_REWARD_TOKEN_PREFIX}`,
+        {
+          from: deployer,
+          contract: "TestnetERC20",
+          args: [reward, reward, 18, faucetOwnable.address],
+          ...COMMON_DEPLOY_PARAMS,
+        }
+      );
+      await hre.run("verify:verify", {
+        address: rewardTokenArtifact.address,
+        constructorArguments: [reward, reward, 18, faucetOwnable.address],
       });
     }
 
-    // 3. Deployment of Stake Aave
+    // 3. Deployment of Stake SmartLend
     const COOLDOWN_SECONDS = "3600";
     const UNSTAKE_WINDOW = "1800";
-    const aaveTokenArtifact = await deployments.get(
-      `AAVE${TESTNET_TOKEN_PREFIX}`
+    const smartlendTokenArtifact = await deployments.get(
+      `SMARTLEND${TESTNET_TOKEN_PREFIX}`
     );
 
     const stakeProxy = await deployInitializableAdminUpgradeabilityProxy(
-      STAKE_AAVE_PROXY
+      STAKE_SMARTLEND_PROXY
     );
 
-    // Setup StkAave
-    await setupStkAave(stakeProxy, [
-      aaveTokenArtifact.address,
-      aaveTokenArtifact.address,
+    // Setup StkSmartLend
+    await setupStkSmartLend(stakeProxy, [
+      smartlendTokenArtifact.address,
+      smartlendTokenArtifact.address,
       COOLDOWN_SECONDS,
       UNSTAKE_WINDOW,
       incentivesRewardsVault,

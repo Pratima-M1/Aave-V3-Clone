@@ -3,7 +3,7 @@ import { loadPoolConfig } from "../../helpers/market-config-helpers";
 import { getPoolConfiguratorProxy } from "../../helpers/contract-getters";
 import { task } from "hardhat/config";
 import { waitForTx } from "../../helpers/utilities/tx";
-import { getAaveProtocolDataProvider } from "../../helpers/contract-getters";
+import { getSmartLendProtocolDataProvider } from "../../helpers/contract-getters";
 import { MARKET_NAME } from "../../helpers/env";
 import { FORK } from "../../helpers/hardhat-config-helpers";
 import chalk from "chalk";
@@ -30,7 +30,7 @@ task(`review-stable-borrow`, ``)
     ) => {
       const { poolAdmin } = await hre.getNamedAccounts();
       const checkOnlyReserves: string[] = checkOnly ? checkOnly.split(",") : [];
-      const dataProvider = await getAaveProtocolDataProvider();
+      const dataProvider = await getSmartLendProtocolDataProvider();
       const poolConfigurator = (await getPoolConfiguratorProxy()).connect(
         await hre.ethers.getSigner(poolAdmin)
       );

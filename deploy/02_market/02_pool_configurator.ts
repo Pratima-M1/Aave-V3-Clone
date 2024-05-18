@@ -11,6 +11,7 @@ import { getPoolConfiguratorProxy, waitForTx } from "../../helpers";
 const func: DeployFunction = async function ({
   getNamedAccounts,
   deployments,
+  ...hre
 }: HardhatRuntimeEnvironment) {
   const { deploy, get } = deployments;
   const { deployer } = await getNamedAccounts();
@@ -35,7 +36,7 @@ const func: DeployFunction = async function ({
   await waitForTx(await poolConfig.initialize(addressesProviderAddress));
   console.log("Initialized PoolConfigurator Implementation");
 
-  await deploy(RESERVES_SETUP_HELPER_ID, {
+  const reserveArtifact = await deploy(RESERVES_SETUP_HELPER_ID, {
     from: deployer,
     args: [],
     contract: "ReservesSetupHelper",

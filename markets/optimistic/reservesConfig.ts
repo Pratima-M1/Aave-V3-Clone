@@ -1,4 +1,4 @@
-import { rateStrategyStableOne } from "./../aave/rateStrategies";
+import { rateStrategyStableOne } from "../smartlend/rateStrategies";
 import { eContractid, IReserveParams } from "../../helpers/types";
 
 export const strategySUSD: IReserveParams = {

@@ -55,7 +55,7 @@ export const strategyUSDC: IReserveParams = {
   borrowableIsolation: true,
 };
 
-export const strategyAAVE: IReserveParams = {
+export const strategySMARTLEND: IReserveParams = {
   strategy: rateStrategyDebtPrevention,
   baseLTVAsCollateral: "5000",
   liquidationThreshold: "6500",
